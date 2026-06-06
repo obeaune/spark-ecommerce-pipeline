@@ -1,14 +1,12 @@
 package com.caroline.dataengineering
 
-import com.caroline.dataengineering.config.SparkConfig
+import com.caroline.dataengineering.bronze.BronzeIngestion
 
 object Main {
   def main(args: Array[String]): Unit = {
-    val spark = SparkConfig.createSparkSession("Ecommerce Pipeline.")
-
-    println("Spark session started!")
-    println(s"Spark version: ${spark.version}")
-
-    spark.stop()
+    BronzeIngestion.ingest(
+      inputPath  = "C:/Users/ana/Codes/spark-ecommerce-pipeline/spark-ecommerce-pipeline/data/input/transactions_20260605.txt",
+      outputPath = "C:/Users/ana/Codes/spark-ecommerce-pipeline/spark-ecommerce-pipeline/data/bronze/transactions"
+    )
   }
 }

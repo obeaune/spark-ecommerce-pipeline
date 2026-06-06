@@ -2,3 +2,7 @@ target/
 *.class
 .idea/
 *.iml
+data/bronze/
+data/silver/
+data/gold/
+data/input/
