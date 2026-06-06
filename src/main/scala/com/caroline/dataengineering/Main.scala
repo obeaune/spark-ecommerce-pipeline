@@ -1,12 +1,12 @@
 package com.caroline.dataengineering
 
-import com.caroline.dataengineering.silver.SilverTransformation
+import com.caroline.dataengineering.gold.GoldAggregation
 
 object Main {
   def main(args: Array[String]): Unit = {
-    SilverTransformation.transform(
-      inputPath  = "C:/Users/ana/Codes/spark-ecommerce-pipeline/spark-ecommerce-pipeline/data/bronze/transactions",
-      outputPath = "C:/Users/ana/Codes/spark-ecommerce-pipeline/spark-ecommerce-pipeline/data/silver/transactions"
+    GoldAggregation.aggregate(
+      inputPath  = "C:/Users/ana/Codes/spark-ecommerce-pipeline/spark-ecommerce-pipeline/data/silver/transactions",
+      outputPath = "C:/Users/ana/Codes/spark-ecommerce-pipeline/spark-ecommerce-pipeline/data/gold/merchants"
     )
   }
 }
