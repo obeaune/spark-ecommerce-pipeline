@@ -1,16 +1,13 @@
 package com.caroline.dataengineering
 
-import org.apache.spark.sql.SparkSession
+import com.caroline.dataengineering.config.SparkConfig
 
 object Main {
   def main(args: Array[String]): Unit = {
-    val spark = SparkSession.builder()
-      .appName("Ecommerce Pipeline")
-      .master("local[*]")
-      .getOrCreate()
+    val spark = SparkConfig.createSparkSession("Ecommerce Pipeline.")
 
-    println("Spark session iniciada!")
-    println(s"Versão do Spark: ${spark.version}")
+    println("Spark session started!")
+    println(s"Spark version: ${spark.version}")
 
     spark.stop()
   }
