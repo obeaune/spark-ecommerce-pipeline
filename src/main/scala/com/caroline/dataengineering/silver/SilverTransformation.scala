@@ -36,7 +36,5 @@ object SilverTransformation {
       .parquet(outputPath)
 
     println(s"Silver transformation complete. Records: ${silverDF.count()}")
-
-    spark.stop()
   }
 }

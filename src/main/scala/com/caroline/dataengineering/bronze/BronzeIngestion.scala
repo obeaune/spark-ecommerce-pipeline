@@ -44,7 +44,5 @@ object BronzeIngestion {
       .parquet(outputPath)
 
     println(s"Bronze ingestion complete. Records: ${bronzeDF.count()}")
-
-    spark.stop()
   }
 }

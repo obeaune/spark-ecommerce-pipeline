@@ -33,7 +33,5 @@ object GoldAggregation {
 
     println(s"Gold aggregation complete. Merchants: ${goldDF.count()}")
     goldDF.show(10, truncate = false)
-
-    spark.stop()
   }
 }

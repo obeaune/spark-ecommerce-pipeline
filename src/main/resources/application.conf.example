@@ -1,0 +1,3 @@
+pipeline {
+  base-path = "/path/to/your/data"
+}

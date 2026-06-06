@@ -6,3 +6,4 @@ data/bronze/
 data/silver/
 data/gold/
 data/input/
+src/main/resources/application.conf
