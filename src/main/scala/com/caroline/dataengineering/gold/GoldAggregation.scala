@@ -29,6 +29,7 @@ object GoldAggregation {
     goldDF
       .write
       .mode(SaveMode.Overwrite)
+      .partitionBy("merchant_id")
       .parquet(outputPath)
 
     println(s"Gold aggregation complete. Merchants: ${goldDF.count()}")

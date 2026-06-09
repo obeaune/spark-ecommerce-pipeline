@@ -29,10 +29,13 @@ object SilverTransformation {
           .when(col("status") === "02", "cancelled")
           .otherwise("unknown"))
       .drop("value_cents", "datetime", "installments", "payment_type", "status")
+      .withColumn("year", year(col("transaction_datetime")))
+      .withColumn("month", month(col("transaction_datetime")))
 
     silverDF
       .write
       .mode(SaveMode.Overwrite)
+      .partitionBy("year", "month")
       .parquet(outputPath)
 
     println(s"Silver transformation complete. Records: ${silverDF.count()}")
