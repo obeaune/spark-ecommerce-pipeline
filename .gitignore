@@ -7,3 +7,4 @@ data/silver/
 data/gold/
 data/input/
 src/main/resources/application.conf
+data/bronze/transactions_validated/
