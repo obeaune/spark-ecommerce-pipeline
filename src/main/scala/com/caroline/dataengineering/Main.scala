@@ -12,27 +12,35 @@ object Main {
     val basePath = AppConfig.basePath
     val inputFile = if (args.nonEmpty) args(0) else s"$basePath/input/transactions_20260605.txt"
 
-    println("=== Starting Ecommerce Pipeline ===")
+    try {
+      println("=== Starting Ecommerce Pipeline ===")
 
-    println("\n[1/3] Bronze ingestion...")
-    BronzeIngestion.ingest(
-      inputPath  = inputFile,
-      outputPath = s"$basePath/bronze/transactions"
-    )
+      println("\n[1/3] Bronze ingestion...")
+      BronzeIngestion.ingest(
+        inputPath = inputFile,
+        outputPath = s"$basePath/bronze/transactions"
+      )
 
-    println("\n[2/3] Silver transformation...")
-    SilverTransformation.transform(
-      inputPath  = s"$basePath/bronze/transactions",
-      outputPath = s"$basePath/silver/transactions"
-    )
+      println("\n[2/3] Silver transformation...")
+      SilverTransformation.transform(
+        inputPath = s"$basePath/bronze/transactions",
+        outputPath = s"$basePath/silver/transactions"
+      )
 
-    println("\n[3/3] Gold aggregation...")
-    GoldAggregation.aggregate(
-      inputPath  = s"$basePath/silver/transactions",
-      outputPath = s"$basePath/gold/merchants"
-    )
+      println("\n[3/3] Gold aggregation...")
+      GoldAggregation.aggregate(
+        inputPath = s"$basePath/silver/transactions",
+        outputPath = s"$basePath/gold/merchants"
+      )
 
-    println("\n=== Pipeline completed successfully! ===")
-    spark.stop()
+      println("\n=== Pipeline completed successfully! ===")
+
+    } catch {
+      case e: Exception =>
+        println(s"\n[ERROR] Pipeline failed: ${e.getMessage}")
+        throw e
+    } finally {
+      spark.stop()
+    }
   }
 }
