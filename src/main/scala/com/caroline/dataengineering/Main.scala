@@ -4,6 +4,7 @@ import com.caroline.dataengineering.bronze.BronzeIngestion
 import com.caroline.dataengineering.silver.SilverTransformation
 import com.caroline.dataengineering.gold.GoldAggregation
 import com.caroline.dataengineering.config.{AppConfig, SparkConfig}
+import com.caroline.dataengineering.bronze.DataValidator
 
 object Main {
 
@@ -20,6 +21,19 @@ object Main {
         inputPath = inputFile,
         outputPath = s"$basePath/bronze/transactions"
       )
+
+      println("\n[1.5/3] Data validation...")
+      val bronzeDF = spark.read.parquet(s"$basePath/bronze/transactions")
+      val validationResult = DataValidator.validate(bronzeDF)
+      println(s"  Total records:   ${validationResult.totalRecords}")
+      println(s"  Valid records:   ${validationResult.validRecords}")
+      println(s"  Invalid records: ${validationResult.invalidRecords}")
+      println(s"  Zero values:     ${validationResult.zeroValueRecords}")
+      println(s"  Invalid dates:   ${validationResult.invalidDateRecords}")
+
+      val validDF = DataValidator.filterValid(bronzeDF)
+      validDF.write.mode(org.apache.spark.sql.SaveMode.Overwrite)
+        .parquet(s"$basePath/bronze/transactions_validated")
 
       println("\n[2/3] Silver transformation...")
       SilverTransformation.transform(
